@@ -1,0 +1,66 @@
+Vectrosity Release Notes
+------------------------
+
+Vectrosity 1.3
+
+Additions:
+	¥ VectorLine.Resize for changing the number of segments that make up a line, instead of having to destroy and recreate it.
+	¥ Vector.MakeCharsInLine for making vector text.
+	¥ Vector.SetWidths for setting the pixel width of each line segment in a VectorLine. Pass in an array of floats, one entry for each line segment.
+	¥ VectorLine.smoothWidth for whether or not line segment widths should be interpolated between segments.
+
+Changes:
+	¥ Vector.SetTextureScale and Vector.ResetTextureScale work for 3D lines as well as 2D lines.
+	¥ Some miscellaneous minor speedups; line drawing is 2-5% faster depending on the function.
+	¥ VectorLine.vertexColors changed to VectorLine.lineColors, to make it consistent with lineVertices and lineUVs.
+	¥ Improved documentation.
+	¥ Simpler handling for 3D vector objects using VectorManager functions, thanks to OnDestroy in Unity 3.2.
+
+Fixes:
+	¥ VisibilityControlStatic accounts for rotated objects now.
+
+-----------
+
+Vectrosity 1.2
+
+Additions:
+	¥ Vector.SetColorsSmooth for making line segment colors be interpolated between segments.
+	¥ Vector.SetLine and Vector.SetLine3D for making basic lines as simply as possible.
+	¥ A VectorPoints class, for using Vector.DrawPoints without the hacks that were required previously.
+	¥ A new example script in the VectrosityDemos package: DrawLinesTouch, for touchscreen line-drawing.
+
+Changes:
+	¥ Passing in "null" for the line material will use a default material, which works properly with vertex colors and the line depth parameter. Useful if you just need a standard line material without any textures.
+	¥ Vector.SetCamera is optional now. It will be called for you when necessary, as long as your camera is tagged "Main Camera".  (If not, you can still call it manually.)
+	¥ Vector.MakeCurveInLine, Vector.MakeRectInLine, and Vector.MakeCircleInLine/MakeEllipseInLine work for 3D lines as well as 2D lines.
+	¥ Vector.SetCamera has an additional parameter, useOrtho (default is false), which makes the vector camera be orthographic. This can make lines render slightly more accurately, but may cause anomalies with 3D lines in certain cases.
+	¥ Dynamic typing removed from DrawCurve.js in the VectrosityDemos package, so it will build on mobile devices.
+
+-----------
+
+Vectrosity 1.1
+
+Additions:
+	¥ Vector.MakeCircleInLine and Vector.MakeEllipseInLine.
+	¥ Vector.MakeCurveinLine for bezier curves.
+	¥ Vector.SetTextureScale for setting a uniform texture scale, useful for dotted/dashed/etc. lines.
+	¥ Vector.ResetTextureScale in case you want to reset the line UVs back to normal after using SetTextureScale.
+	¥ Vector.DrawLine3D for drawing 3D vector lines in 3D space, where they can be occluded by 3D objects.
+	¥ Vector.SetCamera3D for setting up the camera exclusively for 3D lines. In this case the standard vector camera is not used.
+	¥ Vector.SetLayer for setting the layer of 3D lines, in case you're using SetCamera instead of SetCamera3D because you want to mix normal lines with 3D lines.
+	¥ Vector.SetVectorCamDepth for setting the depth of the vector camera (surprise!).  Rather than setting Vector.cam.depth, since Vector.cam is now private.
+	¥ VectorManager.useDrawLine3D variable for telling VectorManager whether it should use DrawLine3D or not.
+	¥ VectorManager.DestroyObject for destroying 3D vectorline objects.
+	¥ Some new example scripts in the VectrosityDemos package.
+
+Changes:
+	¥ Removed LineType parameter from MakeRectInLine. Instead, the line type is picked up automatically from the line that's passed in; there doesn't seem to be a reason to specify it manually.
+	¥ LineMaker now forces strings to use periods for decimals, which fixes problems some European users were having. If this behavior isn't desired for some reason, remove the first line of the Initialize function in the LineMaker script (the line that has the CurrentCulture stuff in it).
+	¥ Additional overloads for defining 2D VectorLines: the default end cap width is 0.0, so if you're not using it, you can do things like "VectorLine("Name", linePoints, material, width)" without having to put 0.0 for the end cap in there.
+	¥ This is more of an internal thing, but in case anyone was using these: VectorLine.use2Dlines is gone (check whether points2 is not null instead), and VectorLine.points is now VectorLine.points3 (just because it's a less confusing name, since it's a Vector3 array, and points2 is a Vector2 array).
+
+-----------
+
+Vectrosity 1.0
+
+Initial release.

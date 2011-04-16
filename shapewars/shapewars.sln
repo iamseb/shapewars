@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+
+Project("{4BAF4836-CC10-30DB-63C3-3CA97CD0315C}") = "shapewars", "shapewars.csproj", "{71C9A488-BB64-B698-25CF-8B5FE5499F58}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71C9A488-BB64-B698-25CF-8B5FE5499F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71C9A488-BB64-B698-25CF-8B5FE5499F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71C9A488-BB64-B698-25CF-8B5FE5499F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71C9A488-BB64-B698-25CF-8B5FE5499F58}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	
+EndGlobal

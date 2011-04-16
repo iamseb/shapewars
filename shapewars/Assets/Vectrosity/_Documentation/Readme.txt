@@ -1,0 +1,1 @@
+You will need to read the .pdf documentation files outside of Unity. You may want to drag the _Documentation folder outside of this project folder to somewhere convenient.
