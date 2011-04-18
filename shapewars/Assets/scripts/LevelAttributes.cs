@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using HutongGames.PlayMaker;
 
 public class LevelAttributes : MonoBehaviour {
 	
@@ -8,6 +9,11 @@ public class LevelAttributes : MonoBehaviour {
 	
 	[SerializeField]
 	private float height = 20.0f;
+	
+	[SerializeField]
+	private Transform playerType;
+	
+	private Transform _player;
 	
 	private static LevelAttributes _instance;
 	
@@ -32,10 +38,22 @@ public class LevelAttributes : MonoBehaviour {
 	public float Height {
 		get { return height; }
 	}
+	
+	public Transform Player {
+		get { return _player; }
+	}	
+	
+	void SpawnPlayer() {
+		_player = (Transform)Instantiate(playerType, Vector3.zero, Quaternion.LookRotation(Vector3.forward)) as Transform;
+		
+		GameObject mc = GameObject.FindGameObjectWithTag("MainCamera");
+		PlayMakerFSM camFSM = (PlayMakerFSM)mc.GetComponent("PlayMakerFSM");
+		camFSM.FsmVariables.GetFsmGameObject("target").Value = _player.gameObject;
+	}
 
 	// Use this for initialization
 	void Start () {
-	
+		SpawnPlayer();
 	}
 	
 	// Update is called once per frame

@@ -10,13 +10,19 @@ public class Baddie : MonoBehaviour {
 	private float health = 1.0f;
 	
 	[SerializeField]
-	private Color color = Color.grey;
+	private Color baddieColor = Color.grey;
 	
 	[SerializeField]
 	private bool bouncesOffWalls = true;
 	
 	[SerializeField]
 	private Vector3 initialDir = Vector3.forward;
+	
+	[SerializeField]
+	private float turnSpeed = 5.0f;
+	
+	[SerializeField]
+	private bool followsTarget;
 	
 	public Vector3 InitialDir {
 		get {
@@ -30,6 +36,10 @@ public class Baddie : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		transform.LookAt(transform.position + initialDir);
+		foreach(Transform t in transform){
+			t.renderer.materials[0].color = baddieColor;
+		}
+		
 	}
 	
 	// Update is called once per frame
@@ -38,6 +48,17 @@ public class Baddie : MonoBehaviour {
 		transform.Translate(Vector3.forward * Time.deltaTime * speed);
 		
 		Vector3 bounceDir = Vector3.zero;
+		
+		if (followsTarget && LevelAttributes.Instance.Player){
+			Transform target = LevelAttributes.Instance.Player;
+			Debug.Log("Following " + target.GetInstanceID());
+			transform.rotation = Quaternion.RotateTowards(
+				transform.rotation, 
+			    Quaternion.LookRotation(target.position - transform.position, transform.up), 
+			    turnSpeed
+            );
+		}
+			
 	
 		LevelAttributes level = LevelAttributes.Instance;
 		float xMax = level.transform.position.x + (level.Width / 2.0f);
@@ -70,6 +91,8 @@ public class Baddie : MonoBehaviour {
 			Debug.Log("Bouncing off wall in direction " + bounceDir);
 			BounceOffWalls(bounceDir);
 		}
+		
+		Debug.DrawRay(transform.position, transform.forward);
 	}
 	
 	
@@ -78,6 +101,14 @@ public class Baddie : MonoBehaviour {
 		transform.LookAt(transform.position + reflection);
 		Debug.Log("Reflection vector is " + reflection);
 		// Debug.DrawRay(transform.position, reflection);
+	}
+	
+	
+	void OnCollisionEnter(Collision collision){
+		if(collision.gameObject.CompareTag("bullet")){
+			Destroy(collision.gameObject);
+			Destroy(gameObject);
+		}
 	}
 	
 }
