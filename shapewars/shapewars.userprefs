@@ -1,16 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/Baddie.cs">
-    <Files>
-      <File FileName="Assets/PlayMaker/Actions/Translate.cs" Line="52" Column="1" />
-      <File FileName="Assets/scripts/HitBoundsAction.cs" Line="63" Column="16" />
-      <File FileName="Assets/scripts/Baddie.cs" Line="36" Column="32" />
-      <File FileName="Assets/PlayMaker/Actions/Vector3Add.cs" Line="38" Column="4" />
-      <File FileName="Assets/PlayMaker/Actions/Rotate.cs" Line="63" Column="1" />
-      <File FileName="Assets/scripts/Bullet.cs" Line="20" Column="38" />
-      <File FileName="Assets/scripts/LevelAttributes.cs" Line="49" Column="13" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

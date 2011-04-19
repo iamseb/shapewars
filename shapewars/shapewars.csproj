@@ -636,6 +636,7 @@
      <None Include="Assets\Vectrosity\_Tank Zone\Scripts\TitleObject.js" />
      <None Include="Assets\Vectrosity\_Tank Zone\Scripts\UI.js" />
      <None Include="Assets\Vectrosity\_Tank Zone\Shaders\ParticleAdditiveSoftZ.shader" />
+     <None Include="Assets\fonts\consolas.txt" />
      <Compile Include="Assets\iTweenEditor\Editor\iTweenEventDataEditor.cs" />
      <Compile Include="Assets\iTweenEditor\Editor\iTweenPathEditor.cs" />
      <Compile Include="Assets\iTweenEditor\Helper Classes\EventParamMappings.cs" />

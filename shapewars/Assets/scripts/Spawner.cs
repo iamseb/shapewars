@@ -47,6 +47,7 @@ public class Spawner : MonoBehaviour
 			int count = baddieRatios[idx];
 			while(count > 0){
 				Vector3 pos = new Vector3(Random.Range(-width/2, width/2), 0, Random.Range(-height/2, height/2));
+				pos += transform.position;
 				Transform spawned = (Transform)Instantiate(baddieTypes[idx], pos, transform.rotation);
 				spawned.GetComponent<Baddie>().Spawner = this;
 				aliveCount++;

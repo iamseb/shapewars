@@ -24,6 +24,19 @@ public class Baddie : MonoBehaviour {
 	[SerializeField]
 	private bool followsTarget;
 	
+	[SerializeField]
+	private Transform explosion;
+	
+	[SerializeField]
+	private int baseScore = 10;
+	
+	private Spawner spawner;
+	
+	public Spawner Spawner {
+		get { return spawner; }
+		set { spawner = value; }
+	}
+	
 	public Vector3 InitialDir {
 		get {
 			return initialDir;
@@ -35,6 +48,8 @@ public class Baddie : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		initialDir = Random.insideUnitSphere;
+		initialDir.y = 0;
 		transform.LookAt(transform.position + initialDir);
 		foreach(Transform t in transform){
 			t.renderer.materials[0].color = baddieColor;
@@ -88,7 +103,6 @@ public class Baddie : MonoBehaviour {
 		transform.position = newPos;
 		
 		if(bouncesOffWalls && bounceDir != Vector3.zero){
-			Debug.Log("Bouncing off wall in direction " + bounceDir);
 			BounceOffWalls(bounceDir);
 		}
 		
@@ -99,16 +113,23 @@ public class Baddie : MonoBehaviour {
 	public void BounceOffWalls(Vector3 bounceDir) {
 		Vector3 reflection = transform.forward - ((2*bounceDir) * Vector3.Dot(transform.forward, bounceDir));
 		transform.LookAt(transform.position + reflection);
-		Debug.Log("Reflection vector is " + reflection);
-		// Debug.DrawRay(transform.position, reflection);
 	}
 	
 	
 	void OnCollisionEnter(Collision collision){
 		if(collision.gameObject.CompareTag("bullet")){
-			Destroy(collision.gameObject);
-			Destroy(gameObject);
+			KillMe(collision.gameObject);
 		}
+	}
+	
+	public void KillMe(GameObject other){
+		LevelAttributes.Instance.Score(baseScore);
+		if(spawner != null){
+			spawner.Decr();
+		}
+		Instantiate(explosion, transform.position, transform.rotation);
+		Destroy(other);
+		Destroy(gameObject);
 	}
 	
 }
