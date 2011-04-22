@@ -647,7 +647,9 @@
      <Compile Include="Assets\iTweenEditor\iTweenEvent.cs" />
      <Compile Include="Assets\iTweenEditor\iTweenPath.cs" />
      <Compile Include="Assets\scripts\Baddie.cs" />
+     <Compile Include="Assets\scripts\BaddieGroup.cs" />
      <Compile Include="Assets\scripts\Bullet.cs" />
+     <Compile Include="Assets\scripts\GamePhase.cs" />
      <Compile Include="Assets\scripts\HitBoundsAction.cs" />
      <Compile Include="Assets\scripts\LevelAttributes.cs" />
      <Compile Include="Assets\scripts\ShipControl.cs" />

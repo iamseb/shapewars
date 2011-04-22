@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using HutongGames.PlayMaker;
 
+[AddComponentMenu("ShapeWars/LevelAttributes")] 
 public class LevelAttributes : MonoBehaviour {
 	
 	[SerializeField]
@@ -12,6 +14,9 @@ public class LevelAttributes : MonoBehaviour {
 	
 	[SerializeField]
 	private Transform playerType;
+	
+	[SerializeField]
+	private Transform explosion;
 	
 	[SerializeField]
 	private Color boxColor = Color.green;
@@ -26,6 +31,16 @@ public class LevelAttributes : MonoBehaviour {
 	
 	[SerializeField]
 	private int playerLives = 3;
+	[SerializeField]
+	private int basePlayerLives = 3;
+	
+	[SerializeField]
+	private GamePhase[] phases;
+	
+	private int currentPhase;
+	
+	private GamePhase _phase;
+
 	
 	[SerializeField]
 	private int playerScore = 0;
@@ -39,17 +54,37 @@ public class LevelAttributes : MonoBehaviour {
 	private SpriteText livesGui;
 	[SerializeField]
 	private SpriteText multiplierGui;
-	
+
 	
 	private static LevelAttributes _instance;
 	
 	private VectorLine box;
+	
+	public void Reset(){
+		playerScore = 0;
+		playerScoreMult = 1;
+		playerLives = basePlayerLives;	
+		SetPhase(0);
+	}
+	
+	public void SetPhase(int p){
+		if(_phase != null){
+			Destroy(_phase.gameObject);
+		}
+		currentPhase = p;
+		_phase = (GamePhase)Instantiate(phases[p]);
+	}
+	
+	public GamePhase Phase {
+		get { return phases[currentPhase]; }
+	}
 	
 	public static LevelAttributes Instance {
 		get {
 			if (!_instance) {
 				_instance = (LevelAttributes)GameObject.FindObjectOfType(typeof(LevelAttributes));
 				if (!_instance) {
+					Debug.LogWarning("Could not find LevelAttributes");
 					GameObject container = new GameObject();
 					container.name = "LevelAttributes";
 					_instance = container.AddComponent(typeof(LevelAttributes)) as LevelAttributes;
@@ -85,6 +120,8 @@ public class LevelAttributes : MonoBehaviour {
 	}
 	
 	void Awake() {
+		Reset();
+		
 		Physics.IgnoreLayerCollision(8, 8);
 		Vector3[] points = new Vector3[8];
 		float minX = -(width+1)/2;
@@ -118,7 +155,7 @@ public class LevelAttributes : MonoBehaviour {
 			livesGui.Text = "Lives: " + playerLives;
 		}
 		if(multiplierGui != null){
-			multiplierGui.Text = "x" + playerScoreMult;
+			multiplierGui.Text = "x " + playerScoreMult.ToString("D3");
 		}
 	}
 	
@@ -137,5 +174,20 @@ public class LevelAttributes : MonoBehaviour {
 	
 	public void MultiplyScore(int mult){
 		playerScoreMult += mult;
+	}
+	
+	public void KillPlayer(){
+		Instantiate(explosion, _player.position, _player.rotation);
+		Destroy(_player.gameObject);
+		playerLives --;
+		if(playerLives > 0){
+			SpawnPlayer();
+		} else {
+			EndGame();	
+		}
+	}
+	
+	public void EndGame() {
+		Debug.Log("GAME ENDED");
 	}
 }

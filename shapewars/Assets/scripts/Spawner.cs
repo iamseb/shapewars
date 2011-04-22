@@ -8,52 +8,35 @@ public class Spawner : MonoBehaviour
 	private float width = 5.0f;
 	[SerializeField]
 	private float height = 5.0f;
-	
-	
-	[SerializeField]
-	private Transform[] baddieTypes;
-	
-	[SerializeField]
-	private int[] baddieRatios;
-	
-	[SerializeField]
-	private float spawnDelay;
-	
-	private bool spawned = false;
-	
-	[SerializeField]
-	private float startTime = 3.0f;
-	
+		
 	[SerializeField]
 	private int aliveCount = 0;
+	
+	[SerializeField]
+	private bool preventOverlap = false;
 				
 
-	// Use this for initialization
-	IEnumerator Start ()
-	{
-		yield return new WaitForSeconds(startTime);
-		StartCoroutine("Spawn");
-	}
-
-	// Update is called once per frame
-	void Update ()
-	{
-		
+	public void Run(BaddieGroup bg){
+		StartCoroutine(Spawn(bg));
 	}
 	
-	public IEnumerator Spawn() {
-		spawned = true;
-		for(int idx=0; idx<baddieTypes.Length; idx++){
-			int count = baddieRatios[idx];
-			while(count > 0){
-				Vector3 pos = new Vector3(Random.Range(-width/2, width/2), 0, Random.Range(-height/2, height/2));
+
+	public IEnumerator Spawn(BaddieGroup bg) {
+		for(int idx=0; idx<bg.amount; idx++){
+			bool overlapping = true;
+			Vector3 pos = new Vector3(Random.Range(-width/2, width/2), 0, Random.Range(-height/2, height/2));
+			pos += transform.position;
+			while(preventOverlap && overlapping){
+				pos = new Vector3(Random.Range(-width/2, width/2), 0, Random.Range(-height/2, height/2));
 				pos += transform.position;
-				Transform spawned = (Transform)Instantiate(baddieTypes[idx], pos, transform.rotation);
-				spawned.GetComponent<Baddie>().Spawner = this;
-				aliveCount++;
-				count --;
-				yield return new WaitForSeconds(spawnDelay);
+				if(!Physics.CheckSphere(pos, 1.0f)){
+					overlapping = false;
+				}
 			}
+			Transform spawned = (Transform)Instantiate(bg.baddieType, pos, transform.rotation);
+			spawned.GetComponent<Baddie>().Spawner = this;
+			aliveCount++;
+			yield return new WaitForSeconds(bg.spawnDelay);
 		}
 	}
 	

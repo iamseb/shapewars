@@ -32,6 +32,8 @@ public class Baddie : MonoBehaviour {
 	
 	private Spawner spawner;
 	
+	private bool alive = false;
+	
 	public Spawner Spawner {
 		get { return spawner; }
 		set { spawner = value; }
@@ -54,7 +56,7 @@ public class Baddie : MonoBehaviour {
 		foreach(Transform t in transform){
 			t.renderer.materials[0].color = baddieColor;
 		}
-		
+		alive = true;
 	}
 	
 	// Update is called once per frame
@@ -118,18 +120,20 @@ public class Baddie : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision collision){
 		if(collision.gameObject.CompareTag("bullet")){
-			KillMe(collision.gameObject);
+			KillMe();
+			Destroy(collision.gameObject);
 		}
 	}
 	
-	public void KillMe(GameObject other){
-		LevelAttributes.Instance.Score(baseScore);
-		if(spawner != null){
-			spawner.Decr();
+	public void KillMe(){
+		if(alive){
+			alive = false;
+			if(spawner != null){
+				spawner.Decr();
+			}
+			Instantiate(explosion, transform.position, transform.rotation);
+			LevelAttributes.Instance.Score(baseScore);
+			Destroy(gameObject);
 		}
-		Instantiate(explosion, transform.position, transform.rotation);
-		Destroy(other);
-		Destroy(gameObject);
 	}
-	
 }

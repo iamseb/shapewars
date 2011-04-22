@@ -1,10 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/Baddie.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/GamePhase.cs">
     <Files>
-      <File FileName="Assets/scripts/Baddie.cs" Line="106" Column="4" />
-      <File FileName="Assets/scripts/Spawner.cs" Line="50" Column="31" />
-      <File FileName="Assets/scripts/LevelAttributes.cs" Line="126" Column="70" />
+      <File FileName="Assets/scripts/GamePhase.cs" Line="4" Column="14" />
+      <File FileName="Assets/scripts/LevelAttributes.cs" Line="6" Column="33" />
+      <File FileName="Assets/scripts/ShipControl.cs" Line="4" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
